@@ -4,16 +4,21 @@ const handlingInstructions = (orders, medications) => {
         // Example: Rx1:MedicationX;Rx2:MedicationY;Rx3:MedicationZ;Rx4:MedicationA
         
         // empty array that will hold list of orders 
-
+        const orderList = [];
 
         // list of medications(separated by semicolon): Medication Name, Special Handling Instructions
         //Example: MedicationA:1,2,4;MedicationX:1,2;MedicationY:0;MedicationZ:4;
         // split string by semicolon
-
+        const entries = orders.split(';');
+        console.log(entries);
         // loop through new array
-
+        for (let i=0; i< entries.lenght; i++) {
         // split new array by colon
 
+        // deconstruct array
+
+        // create object with ID, medicationName
+        }
 
 
         // instructions: “Do Not Shake”, Keep Refrigerated”, “Keep Away from Heat” (include "!!!" for all 3 )
