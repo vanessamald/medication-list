@@ -90,14 +90,11 @@ const handlingInstructions = (orders, medications) => {
                     // add WARNING to label
                     const mergedOrder = [
                                         newOrders.ID,
-                                        newOrders.medication,  
-                                        warningLabel,
+                                        newOrders.medication  
                                         ]
     
                     // push merged order to empty final array 
-                    finishedOrders.push(mergedOrder);
-                        
-                    //console.log(mergedOrder); 
+                    finishedOrders.push(mergedOrder); 
                 }
                 //console.log(warningNumber.split(','));
                  // split string into subarray
@@ -141,18 +138,6 @@ const handlingInstructions = (orders, medications) => {
                     // push merged order to empty final array 
                     finishedOrders.push(mergedOrder);
                     }
-                   /*
-                   // add !!! for 3 warning labels 
-                    if (newNumber.length === 3) {
-                        console.log('!!!')
-                        console.log(newNumber.length);
-                        console.log(newOrders.medication);
-
-                        // splice array, add 'WARNING' WITH '!!!' for 3 labels
-                        mergedOrder.splice(2, 1, 'WARNING!!!');
-                        finishedOrders.push(mergedOrder);
-                    }
-                    */
                 }  
             } 
         }  
