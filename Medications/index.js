@@ -99,16 +99,16 @@ const handlingInstructions = (orders, medications) => {
                         
                     //console.log(mergedOrder); 
                 }
-                
+                //console.log(warningNumber.split(','));
+                 // split string into subarray
+                 let newNumber = warningNumber.split(',');
+                    console.log(newNumber, newNumber.length);
+
                 // conditional statement for 2+ warning labels
-                if (warningNumber.length >= 2 ) {
-                    console.log(warningNumber);
+                if (newNumber.length >= 1 && warningNumber !== '0' ) {
+                    //console.log(warningNumber.length);
                     let warningLabel = [];
 
-                    // split string into subarray
-                    let newNumber = warningNumber.split(',');
-                    console.log(newNumber);
-                   
                     // loop through new array 
                     const element = newNumber.forEach(element => 
                     // push corresponding instructions to empty array
@@ -123,21 +123,36 @@ const handlingInstructions = (orders, medications) => {
                     
                     console.log(mergedOrder);
 
+                     // if there are 3 warning labels  
+                     if (newNumber.length === 3) {
+                        console.log('!!!')
+                        console.log(newNumber.length);
+                        console.log(newOrders.medication);
+
+                        // splice array, add 'WARNING' WITH '!!!' for 3 labels
+                        mergedOrder.splice(2, 0, 'WARNING!!!');
+                        finishedOrders.push(mergedOrder);
+                    
+                    // else return WARNING with no exclamations
+                    } else {
                     // splice array to insert 'WARNING' label before instructions
                     mergedOrder.splice(2, 0, 'WARNING');
-                    //console.log(mergedOrder);
 
                     // push merged order to empty final array 
                     finishedOrders.push(mergedOrder);
-                    //console.log(mergedOrder);
-                    
-                   // console.log(warningNumber.length);
-                   
-                   // add !!! for 3 warning labels 
-                    if (warningNumber.length === 3) {
-                        console.log('!!!')
-                        console.log(warningNumber.length);
                     }
+                   /*
+                   // add !!! for 3 warning labels 
+                    if (newNumber.length === 3) {
+                        console.log('!!!')
+                        console.log(newNumber.length);
+                        console.log(newOrders.medication);
+
+                        // splice array, add 'WARNING' WITH '!!!' for 3 labels
+                        mergedOrder.splice(2, 1, 'WARNING!!!');
+                        finishedOrders.push(mergedOrder);
+                    }
+                    */
                 }  
             } 
         }  
