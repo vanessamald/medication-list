@@ -34,7 +34,7 @@ const handlingInstructions = (orders, medications) => {
         const [ orderID, medicationName ] = entry;
         // create object with ID, medicationName
         let newOrders = {
-                            ID: orderID,
+                            ID: orderID, 
                             medication: medicationName
                         }
         
@@ -48,11 +48,20 @@ const handlingInstructions = (orders, medications) => {
         const medicationList = [];
         console.log(medicationList)
         
+        // sort through medications and look for duplicates
+        let sorted_meds = medications.split(';').sort();  
+        console.log(sorted_meds);           
+
+
         const meds = medications.split(';');
         //console.log(meds);
         
         // loop through medications
         for (let j=0; j< meds.length; j++ ) {
+            // check if there is a duplicate
+            if(sorted_meds[j + 1] == sorted_meds[j]) {
+
+            }
             // split new array by colon
             let med = meds[j].split(':');
             //console.log(med);
@@ -87,10 +96,11 @@ const handlingInstructions = (orders, medications) => {
                     console.log(newMedication.label);
                     let warningLabel = newInstruction[warningNumber];
                 
+                    
                     // add WARNING to label
                     const mergedOrder = [
-                                        newOrders.ID,
-                                        newOrders.medication  
+                                        [newOrders.ID],
+                                        [newOrders.medication]  
                                         ]
     
                     // push merged order to empty final array 
@@ -121,7 +131,10 @@ const handlingInstructions = (orders, medications) => {
                     console.log(mergedOrder);
 
                      // if there are 3 warning labels  
-                     if (newNumber.length === 3) {
+                     if (newNumber.length === 3 && warningLabel.includes(undefined)  === false ) {
+                        // testing edge case if warning label does not exist 
+                        console.log(warningLabel.includes(undefined));
+
                         console.log('!!!')
                         console.log(newNumber.length);
                         console.log(newOrders.medication);
@@ -136,16 +149,15 @@ const handlingInstructions = (orders, medications) => {
                     mergedOrder.splice(2, 0, 'WARNING');
 
                     // push merged order to empty final array 
-                    finishedOrders.push(mergedOrder);
+                    finishedOrders.push(mergedOrder.join(':'));
                     }
                 }  
             } 
         }  
     } 
-   console.log(finishedOrders); 
-   //console.log(finishedOrders.toString());   
+   console.log(finishedOrders);  
 }   
 
-handlingInstructions('Rx1:MedicationX;Rx2:MedicationY;Rx3:MedicationZ;Rx4:MedicationA', 'MedicationA:1,2,3;MedicationX:1,2;MedicationY:0;MedicationZ:3');
+handlingInstructions('Rx1:MedicationX;Rx2:MedicationY;Rx3:MedicationZ;Rx4:MedicationA', 'MedicationA:1,2,4;MedicationX:1,1,2;MedicationY:0;MedicationZ:3');
 
 //module.exports = handlingInstructions;
