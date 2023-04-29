@@ -19,7 +19,6 @@ const handlingInstructions = (orders, medications) => {
 
     // split 'order' string by semicolon into an array
     const entries = orders.split(';');
-        //console.log(entries);
 
     // empty array for medications
     const medicationList = [];
@@ -28,7 +27,7 @@ const handlingInstructions = (orders, medications) => {
 
     // List of Orders Example: Rx1:MedicationX;Rx2:MedicationY;Rx3:MedicationZ;Rx4:MedicationA
 
-    // loop through new array
+    // loop through orders
     for (let i=0; i< entries.length; i++) {
             
         // split new array by colon
@@ -47,17 +46,6 @@ const handlingInstructions = (orders, medications) => {
 
         // list of medications(separated by semicolon): Medication Name, Special Handling Instructions
         //Example: MedicationA:1,2,4;MedicationX:1,2;MedicationY:0;MedicationZ:4;
-
-        /*
-        // empty array for medications
-        const medicationList = [];
-        
-        // sort through medications and look for duplicates
-        let sorted_meds = medications.split(';').sort();  
-        //console.log(sorted_meds);          
-
-        const meds = medications.split(';');
-        */
        
         // loop through medications
         for (let j=0; j< meds.length; j++ ) {
@@ -97,11 +85,10 @@ const handlingInstructions = (orders, medications) => {
                     let warningArray = warningNumber.split(',')
                     // map through warning number
                     let newWarningNumber = warningArray.map((number)=>(number)) 
-                    console.log(newWarningNumber);
-                    // filter out numbers greater than 4
+                    
+                    // filter out numbers greater than 3
                     let newNumbers = newWarningNumber.filter((element) => element < 4);
-                    console.log(newNumbers.length, newNumbers);
-
+                    
                 // get corresponding label
                 let warningLabel = newInstruction[warningNumber];
                     console.log(warningLabel);
@@ -118,16 +105,10 @@ const handlingInstructions = (orders, medications) => {
                     // push merged order to empty final array 
                     finishedOrders.push(mergedOrder); 
                 }
-
-               /*
-                // split warning number into a subarray
-                let newNumber = warningNumber.split(',')
-                    console.log(newNumber);*/
                
-                // if warning label does not equal 0 
+                // if only one warning label needed 
                 if (newNumbers.length >= 1 && warningNumber !== '0' ) {
                    
-                    
                     // array holding multiple Warnings
                     let warningLabel = [];
 
@@ -145,8 +126,6 @@ const handlingInstructions = (orders, medications) => {
 
                      // if there are 3 warning labels  
                      if (newNumbers.length === 3 ) {
-                        // TESTING edge case if warning label does not exist 
-                        console.log(warningLabel.includes(undefined));
 
                         // splice array, add 'WARNING' WITH '!!!' for 3 labels
                         mergedOrder.splice(2, 0, 'WARNING!!!');
