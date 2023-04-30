@@ -35,7 +35,7 @@ const handlingInstructions = (orders, medications) => {
 
         // deconstruct array
         const [ orderID, medicationName ] = entry;
-        // create object with ID, medicationName
+        // create object with ID & medicationName
         let newOrders = {
                         ID: orderID, 
                         medication: medicationName
@@ -54,18 +54,18 @@ const handlingInstructions = (orders, medications) => {
             let med = meds[j].split(':');
             
             // deconstruct array
-            const [ name, label ] = med;
+            const [ name, labelNumber ] = med;
             // split label into array
-            const labelArray =  label.split(',');
+            const labelArray =  labelNumber.split(',');
 
                   // delete duplicate labels 
                   let uniqueLabel = [...new Set(labelArray)];
-                  let newLabel = uniqueLabel.toString();
+                  let newLabelNumber = uniqueLabel.toString();
     
             // new medication object
             let newMedication = { 
                                 medicationName: name, 
-                                label: newLabel
+                                label: newLabelNumber
                                 };
 
                                 //console.log(newMedication)
@@ -73,28 +73,45 @@ const handlingInstructions = (orders, medications) => {
             // push new new object into empty array
             medicationList.push(newMedication);
 
+            
+
             // List of Final Orders 
             // Example Format: [OrderID]:[Medication Name]:[WARNING-Instructions (comma separated with whitespace)]
             // Example Output: Rx1:MedicationX:WARNING-Do Not Shake, Must Refrigerate
             
-            // conditional statement to check if medications match order 
+            // conditional statement to check if medication name match order 
             if (newOrders.medication === newMedication.medicationName ) {
 
                 // get warning number 
+                
                 let warningNumber = newMedication.label;
+
                     let warningArray = warningNumber.split(',')
                     // map through warning number
-                    let newWarningNumber = warningArray.map((number)=>(number)) 
+                    let mappedWarning = warningArray.map((number)=>(number)) 
+                    console.log(mappedWarning);
+
                     
+
                     // filter out numbers greater than 3
-                    let newNumbers = newWarningNumber.filter((element) => element < 4);
+                    let filteredWarning = mappedWarning.filter((element) => element < 4);
+                    console.log(filteredWarning);
+                   
+
+                    // if mappedWarning === 0 let newWarningNumber = 0 
+                    let newWarningNumber = filteredWarning.length === 0 ? ['0'] : filteredWarning;
+                    console.log(newWarningNumber);
+
+                    let [ desWarningNumber ] = newWarningNumber;
+                    console.log(desWarningNumber);
                     
                 // get corresponding label
                 let warningLabel = newInstruction[warningNumber];
                     console.log(warningLabel);
-
+                    
                 // if no 'WARNING' needed on label
-                if  (warningNumber === '0' || newNumbers.length === 0 )  {
+                if  (desWarningNumber === '0' ) {
+                // || newNumbers.length === 0 )  {
                      
                     // merge order id and medication name into new array
                     const mergedOrder = [
@@ -107,13 +124,14 @@ const handlingInstructions = (orders, medications) => {
                 }
                
                 // if only one warning label needed 
-                if (newNumbers.length >= 1 && warningNumber !== '0' ) {
+                if (desWarningNumber !== '0') {
+                //if (newNumbers.length <= 1 && warningNumber !== '0' ) {
                    
                     // array holding multiple Warnings
                     let warningLabel = [];
 
                     // loop through filtered Warning Numbers  
-                    const element = newNumbers.forEach(element => 
+                    const element = filteredWarning.forEach(element => 
                     // push corresponding instructions to empty array
                     warningLabel.push(newInstruction[element]))
                     //console.log(warningLabel);  
@@ -124,11 +142,13 @@ const handlingInstructions = (orders, medications) => {
                         warningLabel
                         ]
 
-                     // if there are 3 warning labels  
-                     if (newNumbers.length === 3 ) {
+                     // if there are 3 warning labels 
+                     
+                    if (newWarningNumber.length === 3 ) {
 
+                    //const newMergedOrder = newNumbers.length === 3 ? mergedOrder.splice(2, 0, 'WARNING!!!') : mergedOrder.splice(2, 0, 'WARNING');
                         // splice array, add 'WARNING' WITH '!!!' for 3 labels
-                        mergedOrder.splice(2, 0, 'WARNING!!!');
+                       mergedOrder.splice(2, 0, 'WARNING!!!');
                         finishedOrders.push(mergedOrder);
                     
                     // else return WARNING with no exclamations
