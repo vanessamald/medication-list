@@ -1,17 +1,17 @@
 // accept two strings
 const handlingInstructions = (orders, medications) => {
     //empty array holding final orders
-    let finishedOrders = []; 
+    const finishedOrders = []; 
 
     // array of instructions
-    let instructions = [
+    const instructions = [
                         'No Special Instructions',
                         'Do Not Shake',
                         'Keep Refrigerated',
                         'Keep Away From Heat',
                         ]
     // map through instructions
-    let newInstruction = instructions.map((instruction)=>(instruction))
+    const newInstruction = instructions.map((instruction)=>(instruction))
         
     // split orders and medications into arrays
     const entries = orders.split(';'); 
@@ -26,7 +26,7 @@ const handlingInstructions = (orders, medications) => {
         // deconstruct array and create a new object
         const [ orderID, medicationName ] = entry;
         
-        let newOrders = {
+        const newOrders = {
                         ID: orderID, 
                         medication: medicationName
                         }
@@ -47,7 +47,7 @@ const handlingInstructions = (orders, medications) => {
                   let newLabelNumber = uniqueLabel.toString();
     
             // new medication object
-            let newMedication = { 
+            const newMedication = { 
                                 medicationName: name, 
                                 label: newLabelNumber
                                 };
@@ -67,39 +67,34 @@ const handlingInstructions = (orders, medications) => {
                     let filteredWarning = mappedWarning.filter((element) => element < 4);
                         //console.log(filteredWarning);
                    
-                    // if mappedWarning === 0 let newWarningNumber = 0 
-                    let newWarningNumber = filteredWarning.length === 0 ? ['0'] : filteredWarning;
-                        //console.log(newWarningNumber);
+                    // if filteredWarning length is now 0 change to = 0 ('No Special Handling Instructions')
+                    const newWarningNumber = filteredWarning.length === 0 ? ['0'] : filteredWarning;
 
-                    let [ desWarningNumber ] = newWarningNumber;
-                        //console.log(desWarningNumber);
-                    
-                // get corresponding label
-                //let warningLabel = newInstruction[warningNumber];
-                    //console.log(warningLabel);
-                    
+                    // convert newWarningNumber to string to compare values
+                    let warningNumberString = newWarningNumber.toString();
+
                 // if no 'WARNING' needed on label
-                if  (desWarningNumber === '0' ) {
+                if  (warningNumberString === '0' ) {
                      
                     // merge order id and medication name into new array
                     const mergedOrder = {
                                         ID: newOrders.ID,
                                         medication: newOrders.medication,
-                                        label: '' 
+                                        label: ''
                                         }
     
                     // push merged order to empty final array 
                     finishedOrders.push(mergedOrder); 
                 }
                
-                // if only one warning label needed 
-                if (desWarningNumber !== '0') {
+                // if warning label is not 0 (No Special Instructions) 
+                if (warningNumberString !== '0') {
                    
-                    // array holding multiple Warnings
-                    let warningLabel = [];
+                    // create array holding multiple instructions
+                    const warningLabel = [];
 
-                    // loop through filtered Warning Numbers  
-                    const element = filteredWarning.forEach(element => 
+                    // loop through the newWarningNumber  
+                    const element = newWarningNumber.forEach(element => 
                     // push corresponding instructions to empty array
                     warningLabel.push(newInstruction[element]))
                     
@@ -129,13 +124,15 @@ const handlingInstructions = (orders, medications) => {
             } 
         }  
     } 
-    // format output
-    const formattedOrders = finishedOrders.map(order => `${order.ID}:${order.medication}:${order.label}`).join(';');
+    console.log(finishedOrders);
+
+    // format output 
+    const formattedOrders = finishedOrders.map(order => `${order.ID}:${order.medication}:${order.label}`).join('\n');
     console.log(formattedOrders);
 
     return formattedOrders;
 }  
 
-handlingInstructions('Rx1:MedicationX;Rx2:MedicationY;Rx3:MedicationZ;Rx4:MedicationA','MedicationA:1,2,3;MedicationX:1,2;MedicationY:0;MedicationZ:4');
+handlingInstructions('Rx1:MedicationX;Rx2:MedicationY;Rx3:MedicationZ;Rx4:MedicationA','MedicationA:1,2,3;MedicationX:1,2;MedicationY:0;MedicationZ:1');
 
 //module.exports = handlingInstructions;
