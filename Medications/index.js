@@ -8,7 +8,7 @@ const handlingInstructions = (orders, medications) => {
                         'No Special Instructions',
                         'Do Not Shake',
                         'Keep Refrigerated',
-                        'Keep Away from Heat',
+                        'Keep Away From Heat',
                         ]
 
     // map through instructions
@@ -72,8 +72,6 @@ const handlingInstructions = (orders, medications) => {
 
             // push new new object into empty array
             medicationList.push(newMedication);
-
-            
 
             // List of Final Orders 
             // Example Format: [OrderID]:[Medication Name]:[WARNING-Instructions (comma separated with whitespace)]
@@ -164,8 +162,9 @@ const handlingInstructions = (orders, medications) => {
         }  
     } 
    console.log(finishedOrders);  
+  return finishedOrders.toString();
 }  
 
-handlingInstructions('Rx1:MedicationX;Rx2:MedicationY;Rx3:MedicationZ;Rx4:MedicationA', 'MedicationA:1,2,4;MedicationX:1,1;MedicationY:0;MedicationZ:4');
-
-//module.exports = handlingInstructions;
+//handlingInstructions('Rx1:MedicationX;Rx2:MedicationY;Rx3:MedicationZ;Rx4:MedicationA','MedicationA:1,2,3;MedicationX:1,2;MedicationY:0;MedicationZ:4');
+//handlingInstructions('Rx1:MedicationX','MedicationX:1,2');
+module.exports = handlingInstructions;
